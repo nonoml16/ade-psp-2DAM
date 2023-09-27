@@ -11,33 +11,52 @@ import java.util.Optional;
 @ResponseBody
 public class ControladorAlumno {
 
-    private final RepositorioAlumno repositorioAlumno;
+    //GET (200 OK) (404 NOT FOUND)
+    //POST (201 CREATED) (400 BAD REQUEST)
+    //PUT (200 OK) (400 BAD REQUEST) (404 NOT FOUND)
+    //DELELTE (204 TODO BIEN PERO EL CUERPO DE LA RESPUESTA ESTA VACIO)
+    private AlumnoRepositorio repositorioAlumno;
 
     @GetMapping("/alumno/")
-    public List<Alumno> getAll(){
-        return repositorioAlumno.findAll();
+    public ResponseEntity<List<Alumno>> getAll(){
+        List<Alumno> result = repositorioAlumno.findAll();
+
+        if(result.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/alumno/{id}")
-    public Alumno getById(@PathVariable int id){
-        return repositorioAlumno.findById(id).orElse(null);
+    public ResponseEntity<Alumno> getById(@PathVariable Long id){
+        return ResponseEntity.of(repositorioAlumno.findById(id));
     }
 
     @PostMapping("/alumno/")
-    public Alumno create(@RequestBody Alumno alumno){
-        return repositorioAlumno.save(alumno);
+    public ResponseEntity<Alumno> create(@RequestBody Alumno alumno){
+        Alumno nuevo = repositorioAlumno.save(alumno);
+        //return ResponseEntity.created(null).body(nuevo);
+        return ResponseEntity.status(201).body(nuevo);
     }
 
     @PutMapping("/alumno/{id}")
-    public Alumno edit(@PathVariable int id, @RequestBody Alumno alumno){
-        return repositorioAlumno.edit(alumno);
+    public Alumno edit(@PathVariable Long id, @RequestBody Alumno alumno){
+
+        return repositorioAlumno.findById(id)
+                .map(antiguo -> {
+                    antiguo.setNombre(alumno.getNombre());
+                    antiguo.setApellidos(alumno.getApellidos());
+                    antiguo.setEmail(alumno.getEmail());
+                    antiguo.setEdad(alumno.getEdad());
+                    return repositorioAlumno.save(antiguo);
+                })
+                .orElse(null);
     }
 
     @DeleteMapping("/alumno/{id}")
-    public ResponseEntity<?> delete(@PathVariable int id){
-        Optional<Alumno> a = repositorioAlumno.findById(id);
-        if(a.isPresent())
-            repositorioAlumno.delete(a.get());
+    public ResponseEntity<?> delete(@PathVariable Long id){
+        if(repositorioAlumno.existsById(id))
+            repositorioAlumno.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
