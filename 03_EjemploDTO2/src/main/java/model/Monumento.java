@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.ejeval01monumentos;
+package model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,9 +15,8 @@ public class Monumento {
 
     @Id
     @GeneratedValue
-    private Long id;
+    Long id;
 
-    private String codPais, nombrePais, nombreCiudad, localizacion,
-            nombreMonumento, descripcion, urlImagen;
-
+    private String nombre, localizacion, urlFoto, nombreCategoria;
+    private Categoria categoria;
 }

@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.ejeval01monumentos;
+package com.salesianostriana.dam.ej01ejerciciodto.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,17 +7,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Monumento {
+public class Direccion {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    private String codPais, nombrePais, nombreCiudad, localizacion,
-            nombreMonumento, descripcion, urlImagen;
-
+    private String tipoVia, linea1, linea2, poblacion, provincia;
+    private int cp;
 }

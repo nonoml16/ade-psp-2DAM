@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@ResponseBody
 public class MonumentoControlador {
 
     private MonumentoRepositorio monumentoRepositorio;
@@ -37,11 +36,12 @@ public class MonumentoControlador {
     public Monumento edit(@PathVariable Long id, @RequestBody Monumento monumento){
         return monumentoRepositorio.findById(id)
                 .map(antiguoM -> {
-                    antiguoM.setCodPais(monumento.getCodPais());
+                     antiguoM.setCodPais(monumento.getCodPais());
                     antiguoM.setNombrePais(monumento.getNombrePais());
                     antiguoM.setNombreCiudad(monumento.getNombreCiudad());
-                    antiguoM.setLatitud(monumento.getLatitud());
-                    antiguoM.setLongitud(monumento.getLongitud());
+                    antiguoM.setLocalizacion(monumento.getLocalizacion()
+
+                    );
                     antiguoM.setNombreMonumento(monumento.getNombreMonumento());
                     antiguoM.setDescripcion(monumento.getDescripcion());
                     antiguoM.setUrlImagen(monumento.getUrlImagen());

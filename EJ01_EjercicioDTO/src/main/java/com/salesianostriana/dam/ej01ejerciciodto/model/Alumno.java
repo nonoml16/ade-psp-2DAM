@@ -1,8 +1,9 @@
-package com.salesianostriana.dam.ejeval01monumentos;
+package com.salesianostriana.dam.ej01ejerciciodto.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,13 +12,18 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Monumento {
+public class Alumno {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    private String codPais, nombrePais, nombreCiudad, localizacion,
-            nombreMonumento, descripcion, urlImagen;
+    private String nombre, apellido1, apellido2, email;
+    private int telefono;
 
+    @ManyToOne
+    private Curso curso;
+
+    @ManyToOne
+    private Direccion direccion;
 }
