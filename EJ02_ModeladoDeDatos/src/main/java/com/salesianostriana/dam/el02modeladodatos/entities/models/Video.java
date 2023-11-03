@@ -21,6 +21,7 @@ public class Video {
     @JoinColumn(name = "curso_online_id")
     private CursoOnline cursoOnline;
 
+    //Helpers
     public void addToCursoOnline(CursoOnline cursoOnline){
         this.cursoOnline = cursoOnline;
         cursoOnline.getVideos().add(this);
